@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yszn.security.rbac.dao.SysAclMapper" >
+  <resultMap id="BaseResultMap" type="com.yszn.security.rbac.model.SysAcl" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="acl_module_id" property="aclModuleId" jdbcType="BIGINT" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="bind_phone" property="bindPhone" jdbcType="INTEGER" />
+    <result column="component" property="component" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="operate_ip" property="operateIp" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectByUrl" parameterType="String" resultMap="BaseResultMap">
+    SELECT * FROM sys_acl AS a WHERE a.url is not null and a.url != '' and  #{url} REGEXP a.url
+  </select>
+
+  <select id="selectByUser" parameterType="Long" resultMap="BaseResultMap">
+    SELECT DISTINCT * FROM sys_acl AS a WHERE a.id IN (
+    SELECT ra.acl_id FROM sys_role_acl AS ra WHERE ra.role_id IN (
+    SELECT ru.role_id FROM sys_role_user AS ru WHERE ru.user_id = #{userId}
+    ))
+  </select>
+</mapper>

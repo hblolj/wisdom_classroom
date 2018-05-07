@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yszn.security.rbac.dao.SysAclDataMapper" >
+  <resultMap id="BaseResultMap" type="com.yszn.security.rbac.model.SysAclData" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="acl_id" property="aclId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="param" property="param" jdbcType="VARCHAR" />
+    <result column="operation" property="operation" jdbcType="INTEGER" />
+    <result column="value1" property="value1" jdbcType="VARCHAR" />
+    <result column="value2" property="value2" jdbcType="VARCHAR" />
+    <result column="next_param_op" property="nextParamOp" jdbcType="INTEGER" />
+    <result column="seq" property="seq" jdbcType="TINYINT" />
+  </resultMap>
+
+  <select id="selectAclDataByUserId" parameterType="Long" resultMap="BaseResultMap">
+    SELECT * FROM sys_acl_data AS ad WHERE ad.id IN (
+    SELECT uad.acl_data_id FROM sys_user_acl_data AS uad WHERE uad.user_id = #{userId})
+  </select>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yszn.security.rbac.dao.SysUserAclDataMapper" >
+  <resultMap id="BaseResultMap" type="com.yszn.security.rbac.model.SysUserAclData" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="acl_data_id" property="aclDataId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operator_time" property="operatorTime" jdbcType="TIMESTAMP" />
+    <result column="operator_ip" property="operatorIp" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectByUserIdAndAclId" resultMap="BaseResultMap">
+    SELECT * FROM sys_user_acl_data AS uad WHERE  uad.user_id = #{userId} AND uad.acl_data_id = #{aclId}
+  </select>
+</mapper>
